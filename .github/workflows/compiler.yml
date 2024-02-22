@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-linux
-          path: $HOME/go/bin/${{ env.NAME }}
+          path: ~/go/bin/${{ env.NAME }}
   
   compile-windows:
     name: Compile (Windows)
@@ -57,7 +57,9 @@ jobs:
       
       - name: Parse name
         shell: pwsh
-        run: $env:GITHUB_ENV = "NAME=" + (Split-Path -Leaf ${{ inputs.package }})
+        run: |
+          $pkgname = Split-Path -Leaf ${{ inputs.package }}
+          echo "NAME=$pkgname" >> $env:GITHUB_ENV
 
       - name: Archive
         uses: actions/upload-artifact@v4
@@ -85,4 +87,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-macos
-          path: $HOME/go/bin/${{ env.NAME }}
+          path: ~/go/bin/${{ env.NAME }}
