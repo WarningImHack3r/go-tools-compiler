@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -36,7 +39,7 @@ jobs:
       - name: Parse name
         run: echo "NAME=$(basename ${{ inputs.package }})" >> $GITHUB_ENV
 
-      - name: Archive
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-linux
@@ -47,6 +50,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -61,17 +67,20 @@ jobs:
           $pkgname = Split-Path -Leaf ${{ inputs.package }}
           echo "NAME=$pkgname" >> $env:GITHUB_ENV
 
-      - name: Archive
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-windows
-          path: $env:USERPROFILE\go\bin\${{ env.NAME }}.exe
+          path: "%USERPROFILE%\\go\\bin\\${{ env.NAME }}.exe"
   
   compile-macos:
     name: Compile (macOS)
     runs-on: macos-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -83,7 +92,7 @@ jobs:
       - name: Parse name
         run: echo "NAME=$(basename ${{ inputs.package }})" >> $GITHUB_ENV
 
-      - name: Archive
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-macos
