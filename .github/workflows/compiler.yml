@@ -31,8 +31,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          cache: true
-          cache-dependency-path: "**/go.sum"
+          cache: false
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
@@ -45,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-linux
-          path: go/bin/${{ env.NAME }}
+          path: ~/go/bin/${{ env.NAME }}
   
   compile-windows:
     name: Compile (Windows)
@@ -58,8 +57,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          cache: true
-          cache-dependency-path: "**/go.sum"
+          cache: false
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
@@ -75,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-windows
-          path: go\bin\${{ env.NAME }}.exe
+          path: ~\go\bin\${{ env.NAME }}.exe
   
   compile-macos:
     name: Compile (macOS)
@@ -88,8 +86,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          cache: true
-          cache-dependency-path: "**/go.sum"
+          cache: false
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
@@ -102,4 +99,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME }}-macos
-          path: go/bin/${{ env.NAME }}
+          path: ~/go/bin/${{ env.NAME }}
