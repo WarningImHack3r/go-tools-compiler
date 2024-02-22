@@ -1,0 +1,88 @@
+name: go-tools compiler
+
+on:
+  workflow_dispatch:
+    inputs:
+      go-version:
+        description: Go version
+        type: string
+        required: true
+        default: 1.18
+      package:
+        description: Package URL
+        type: string
+        required: true
+        default: golang.org/x/tools/gopls
+      package-version:
+        description: Package version
+        type: string
+        required: true
+        default: latest
+
+jobs:
+  compile-linux:
+    name: Compile (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ^${{ inputs.go-version }}
+
+      - name: Build/Install
+        run: go install ${{ inputs.package }}@${{ inputs.package-version }}
+      
+      - name: Parse name
+        run: echo "NAME=$(basename ${{ inputs.package }})" >> $GITHUB_ENV
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}-linux
+          path: $HOME/go/bin/${{ env.NAME }}
+  
+  compile-windows:
+    name: Compile (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ^${{ inputs.go-version }}
+
+      - name: Build/Install
+        run: go install ${{ inputs.package }}@${{ inputs.package-version }}
+      
+      - name: Parse name
+        shell: pwsh
+        run: $env:GITHUB_ENV = "NAME=" + (Split-Path -Leaf ${{ inputs.package }})
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}-windows
+          path: $env:USERPROFILE\go\bin\${{ env.NAME }}.exe
+  
+  compile-macos:
+    name: Compile (macOS)
+    runs-on: macos-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ^${{ inputs.go-version }}
+
+      - name: Build/Install
+        run: go install ${{ inputs.package }}@${{ inputs.package-version }}
+      
+      - name: Parse name
+        run: echo "NAME=$(basename ${{ inputs.package }})" >> $GITHUB_ENV
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}-macos
+          path: $HOME/go/bin/${{ env.NAME }}
