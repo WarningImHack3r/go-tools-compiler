@@ -35,6 +35,8 @@ jobs:
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
+        env:
+          GO111MODULE: on
         run: go install ${{ inputs.package }}@${{ inputs.package-version }}
       
       - name: Parse name
@@ -61,6 +63,8 @@ jobs:
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
+        env:
+          GO111MODULE: on
         run: go install ${{ inputs.package }}@${{ inputs.package-version }}
       
       - name: Parse name
@@ -90,6 +94,8 @@ jobs:
           go-version: ^${{ inputs.go-version }}
 
       - name: Build/Install
+        env:
+          GO111MODULE: on
         run: go install ${{ inputs.package }}@${{ inputs.package-version }}
       
       - name: Parse name
