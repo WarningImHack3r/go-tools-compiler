@@ -45,7 +45,7 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.NAME }}-linux
+          name: ${{ env.NAME }}-${{ inputs.package-version }}-linux-go${{ inputs.go-version }}
           path: ~/go/bin/${{ env.NAME }}
   
   compile-windows:
@@ -76,7 +76,7 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.NAME }}-windows
+          name: ${{ env.NAME }}-${{ inputs.package-version }}-windows-go${{ inputs.go-version }}
           path: ~\go\bin\${{ env.NAME }}.exe
   
   compile-macos:
@@ -104,5 +104,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.NAME }}-macos
+          name: ${{ env.NAME }}-${{ inputs.package-version }}-macos-go${{ inputs.go-version }}
           path: ~/go/bin/${{ env.NAME }}
