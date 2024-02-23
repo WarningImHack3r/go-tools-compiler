@@ -7,7 +7,7 @@ on:
         description: Go version
         type: string
         required: true
-        default: 1.18
+        default: "1.18"
       package:
         description: Package URL
         type: string
@@ -22,7 +22,7 @@ on:
 jobs:
   compile-linux:
     name: Compile (Linux)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
