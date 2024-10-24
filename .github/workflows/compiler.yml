@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           cache: false
-          go-version: ^${{ inputs.go-version }}
+          go-version: ${{ inputs.go-version }}
 
       - name: Build/Install
         env:
@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           cache: false
-          go-version: ^${{ inputs.go-version }}
+          go-version: ${{ inputs.go-version }}
 
       - name: Build/Install
         env:
@@ -91,7 +91,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           cache: false
-          go-version: ^${{ inputs.go-version }}
+          go-version: ${{ inputs.go-version }}
 
       - name: Build/Install
         env:
